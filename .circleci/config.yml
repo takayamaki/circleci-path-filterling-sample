@@ -1,0 +1,13 @@
+version: 2.1
+setup: true
+orbs:
+  path-filtering: circleci/path-filtering@1.0.0
+workflows:
+  trigger_workflows:
+    jobs:
+      - path-filtering/filter:
+          base-revision: main
+          config-path: .circleci/workflow.yml
+          mapping: |
+            a/.* run_test_A true
+            b/.* run_test_B true

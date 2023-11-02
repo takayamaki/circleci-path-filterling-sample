@@ -1,0 +1,38 @@
+
+version: 2.1
+
+parameters:
+  run_test_A:
+    type: boolean
+    default: false
+  run_test_B:
+    type: boolean
+    default: false
+
+jobs:
+  test_A_job:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run:
+          name: echo test_A
+          command: echo 'Hello test_A job!'
+  test_B_job:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run:
+          name: echo test_B
+          command: echo 'Hello test_B job!'
+
+workflows:
+  test_A:
+    when: << pipeline.parameters.run_test_A >>
+    jobs:
+      - test_A_job
+  test_B:
+    when: << pipeline.parameters.run_test_B >>
+    jobs:
+      - test_B_job
